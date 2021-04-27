@@ -1,0 +1,36 @@
+
+CREATE:
+mutation {
+  addPet(name:"Ginger", species:"Cat") {
+    name
+  }
+}
+------------------------------------------------------
+READ:
+{
+  allPets{
+    name
+  }
+}
+
+
+{
+  getPet(id: 1) {
+    name
+  }
+}
+------------------------------------------------------
+UPDATE:
+
+mutation{
+  updatePet(id: 1, name:"Truman", species:"Cat") {
+    name
+  }
+}
+------------------------------------------------------
+DELETE:
+mutation {
+  deletePet(id: 1) {
+    name
+  }
+}

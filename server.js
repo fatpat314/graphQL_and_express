@@ -20,6 +20,12 @@ type Pet {
     species: String!
 }
 
+type Mutation{
+    addPet(name: String!, species: String!): Pet!
+    updatePet(id: Int!, name: String, species: String): Pet
+    deletePet(id: Int!): Pet
+}
+
 enum IsAnalog {
     analog
     digital
@@ -53,6 +59,7 @@ type Query {
     getRoll(sides: Int!, rolls: Int!): Int
 
     getPet(id: Int!): Pet
+
     allPets: [Pet!]!
 
     getSynths(id: Int!): Synths
@@ -63,6 +70,7 @@ type Query {
     firstSynth(id: Int!): Synths
 
     petsInRange(start: Int, count: Int): [String]
+
 }`)
 
 // # Mock datatbase in this case:
@@ -138,6 +146,31 @@ const root = {
 
   allSpecies: () => {
       return name
+  },
+
+  addPet: ({ name, species }) => {
+      const pet = { name, species }
+      petList.push(pet)
+      return pet
+  },
+
+  updatePet: ({ id, name, species }) => {
+      const pet = petList[id]
+      if (pet == undefined) {
+          return null
+      }
+      pet.name = name || pet.name
+      pet.species = species || pet.species
+      return pet
+  },
+
+  deletePet: ({ id }) => {
+      const pet = petList[id]
+      if (pet == undefined) {
+          return null
+      }
+      petList[id].splice(id)
+      return pet
   }
 }
 
